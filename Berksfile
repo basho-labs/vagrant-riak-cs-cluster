@@ -9,6 +9,6 @@ cookbook "openssh"
 cookbook "sudo"
 
 cookbook "riak_cs", github: "basho/riak-cs-chef-cookbook", protocol: :ssh
-cookbook "riak_eds", github: "hectcastro/riak-eds-chef-cookbook", protocol: :ssh, branch: "riak-cs-install"
+cookbook "riak", github: "hectcastro/riak-chef-cookbook", protocol: :ssh, branch: "riak_cs_kv_multi_backend"
 #cookbook "riak_cs", path: "/Users/hector/Sites/riak_cs"
-#cookbook "riak_eds", path: "/Users/hector/Sites/riak_eds"
+#cookbook "riak", path: "/Users/hector/Sites/riak"

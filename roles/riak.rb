@@ -6,10 +6,10 @@ require "erlang_template_helper"
 name "riak_cs"
 description "Role for Riak Enterprise nodes."
 run_list(
-  "recipe[riak_eds]"
+  "recipe[riak]"
 )
 default_attributes(
-  "riak_eds" => {
+  "riak" => {
     "config" => {
       "riak_core" => {
         "default_bucket_props" => [["allow_mult", true].to_erl_tuple]

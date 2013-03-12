@@ -68,7 +68,7 @@ Vagrant::Config.run do |cluster|
               "groups" => [ OS[:sudo_group] ],
             }
           },
-          "riak_eds" => {
+          "riak" => {
             "args" => {
               "+S" => 1,
               "-name" => "riak@33.33.33.#{last_octet}"
