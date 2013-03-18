@@ -27,9 +27,6 @@ Vagrant::Config.run do |cluster|
     last_octet = index * IP_INCREMENT
 
     cluster.vm.define "riak#{index}".to_sym do |config|
-      # Auto-update VirtualBox extensions when out-of-date.
-      config.vbguest.auto_update = false
-
       # Configure the VM and operating system.
       config.vm.customize ["modifyvm", :id, "--memory", 1024]
       config.vm.box = OS[:box]
