@@ -10,5 +10,3 @@ cookbook "sudo"
 
 cookbook "riak_cs", github: "basho/riak-cs-chef-cookbook", protocol: :ssh
 cookbook "riak", github: "hectcastro/riak-chef-cookbook", protocol: :ssh, branch: "riak_cs_kv_multi_backend"
-#cookbook "riak_cs", path: "/Users/hector/Sites/riak_cs"
-#cookbook "riak", path: "/Users/hector/Sites/riak"
