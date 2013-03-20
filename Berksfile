@@ -8,5 +8,6 @@ cookbook "htop"
 cookbook "openssh"
 cookbook "sudo"
 
-cookbook "riak_cs", github: "basho/riak-cs-chef-cookbook", protocol: :ssh
-cookbook "riak", github: "hectcastro/riak-chef-cookbook", protocol: :ssh, branch: "riak_cs_kv_multi_backend"
+cookbook "riak-cs", github: "basho/riak-cs-chef-cookbook"
+cookbook "riak", github: "basho/riak-chef-cookbook"
+cookbook "riak-cs-create-admin-user", github: "hectcastro/chef-riak-cs-create-admin-user"

@@ -3,7 +3,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 require "erlang_template_helper"
 
-name "riak_cs"
+name "riak"
 description "Role for Riak Enterprise nodes."
 run_list(
   "recipe[riak]"

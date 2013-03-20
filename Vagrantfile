@@ -1,11 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$LOAD_PATH.unshift("lib") unless $LOAD_PATH.include?("lib")
-
-require "berkshelf/vagrant"
-require "erlang_template_helper"
-
 CENTOS = {
   sudo_group: "wheel",
   box: "opscode-centos-6.3",
@@ -22,30 +17,49 @@ OS            = UBUNTU
 BASE_IP       = "33.33.33"
 IP_INCREMENT  = 10
 
-Vagrant::Config.run do |cluster|
+Vagrant.configure("2") do |cluster|
   (1..NODES).each do |index|
     last_octet = index * IP_INCREMENT
 
     cluster.vm.define "riak#{index}".to_sym do |config|
       # Configure the VM and operating system.
-      config.vm.customize ["modifyvm", :id, "--memory", 1024]
       config.vm.box = OS[:box]
       config.vm.box_url = OS[:url]
+      config.vm.provider(:virtualbox) { |v| v.customize ["modifyvm", :id, "--memory", 1536] }
 
       # Setup the network and additional file shares.
       if index == 1
-        config.vm.forward_port 8080, 8080
-        config.vm.forward_port 8085, 8085
-        config.vm.forward_port 8087, 8087
+        config.vm.network :forwarded_port, guest: 8080, host: 8080
+        config.vm.network :forwarded_port, guest: 8085, host: 8085
+        config.vm.network :forwarded_port, guest: 8087, host: 8087
       end
 
-      config.vm.host_name = "riak#{index}"
-      config.vm.network :hostonly, "#{BASE_IP}.#{last_octet}"
-      config.vm.share_folder "lib", "/tmp/vagrant-chef-1/lib", "lib"
+      config.vm.hostname = "riak#{index}"
+      config.vm.network :private_network, ip: "#{BASE_IP}.#{last_octet}"
+      config.vm.synced_folder "lib/", "/tmp/vagrant-chef-1/lib"
+
+      # Hack for Berkshelf until the following bug is resolved:
+      # https://github.com/RiotGames/berkshelf-vagrant/issues/4
+      config.vm.provision :shell, :inline => <<-SCRIPT.gsub(/^ {8}/, '')
+        #!/bin/sh
+        if [ -x /usr/bin/apt-get ]; then
+          sudo apt-get install -qq -y git
+        else
+          sudo yum install -q -y git
+        fi
+        if [ ! -x /opt/chef/embedded/bin/berks ]; then
+          echo "Installing berkshelf"
+          sudo /opt/chef/embedded/bin/gem install berkshelf --no-ri --no-rdoc --quiet
+        fi
+        echo "Berkshelf: Installing cookbooks"
+        sudo /opt/chef/embedded/bin/berks install -b /vagrant/Berksfile -p /tmp/vagrant-chef-1/chef-solo-1/cookbooks
+        sudo mv /tmp/vagrant-chef-1/chef-solo-1/cookbooks/`ls -1 /tmp/vagrant-chef-1/chef-solo-1/cookbooks/`/* /tmp/vagrant-chef-1/chef-solo-1/cookbooks
+      SCRIPT
 
       # Provision using Chef.
       config.vm.provision :chef_solo do |chef|
         chef.roles_path = "roles"
+        chef.cookbooks_path = "cookbooks"
 
         if config.vm.box =~ /ubuntu/
           chef.add_recipe "apt"
@@ -58,6 +72,8 @@ Vagrant::Config.run do |cluster|
         chef.add_role "riak"
         chef.add_role "stanchion" if index == 1
         chef.add_role "riak_cs"
+
+        chef.add_recipe "riak-cs-create-admin-user" if !ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? && index == 1
 
         chef.json = {
           "authorization" => {
@@ -78,9 +94,7 @@ Vagrant::Config.run do |cluster|
             },
             "config" => {
               "riak_cs" => {
-                "anonymous_user_creation" => (ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? ? false : true),
-                "admin_key" => (ENV["RIAK_CS_ADMIN_KEY"].nil? ? "admin-key" : ENV["RIAK_CS_ADMIN_KEY"]).to_erl_string,
-                "admin_secret" => (ENV["RIAK_CS_SECRET_KEY"].nil? ? "admin-secret" : ENV["RIAK_CS_SECRET_KEY"]).to_erl_string
+                "anonymous_user_creation" => ((ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? || index != 1) ? false : true)
               }
             }
           },
@@ -89,12 +103,6 @@ Vagrant::Config.run do |cluster|
               "+S" => 1,
               "-name" => "stanchion@33.33.33.#{last_octet}"
             },
-            "config" => {
-              "stanchion" => {
-                "admin_key" => (ENV["RIAK_CS_ADMIN_KEY"].nil? ? "admin-key" : ENV["RIAK_CS_ADMIN_KEY"]).to_erl_string,
-                "admin_secret" => (ENV["RIAK_CS_SECRET_KEY"].nil? ? "admin-secret" : ENV["RIAK_CS_SECRET_KEY"]).to_erl_string
-              }
-            }
           }
         }
       end

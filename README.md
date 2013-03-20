@@ -1,7 +1,7 @@
 # Vagrant Riak CS Cluster
 
 This is a Vagrant project powered by Chef to bring up a local Riak CS cluster.
-Each node can run either `Ubuntu 12.04` or `CentOS 6.3` 32-bit with `1024MB`
+Each node can run either `Ubuntu 12.04` or `CentOS 6.3` 32-bit with `1536MB`
 of RAM by default. If you want to tune the OS or node/memory count, you'll
 have to edit the `Vagrantfile` directly.
 
@@ -15,12 +15,11 @@ Download and install Vagrant via the
 **Note**: It is necessary, at present, to install Vagrant 1.0.7 due to a
 compatibility issue.
 
-### Install cookbooks
+### Clone repository
 
 ``` bash
-$ gem install bundler
-$ bundle install
-$ bundle exec berks install
+$ git clone https://github.com/hectcastro/vagrant-riak-cs-cluster.git
+$ cd vagrant-riak-cs-cluster
 ```
 
 ### Launch cluster
@@ -29,22 +28,23 @@ $ bundle exec berks install
 $ RIAK_CS_CREATE_ADMIN_USER=1 vagrant up
 ```
 
-### Create admin user
+### Test cluster
 
 ``` bash
-$ curl -H 'Content-Type: application/json'                  \
-       -X POST http://localhost:8080/riak-cs/user           \
-       --data '{"email":"admin@admin.com", "name":"admin"}'
-$ RIAK_CS_ADMIN_KEY="<ADMIN_KEY>" RIAK_CS_SECRET_KEY="<SECRET_KEY>" vagrant provision
+$ s3cmd -c ~/.s3cfgfasttrack --configure
 ```
 
-## Accessing individual nodes
+There are 4 default settings you should change:
 
-Each node in the cluster is named in the form `riakN` — where `N` is a number
-between `1` and the number of nodes defined for the cluster.
+* **Access Key** - Replace with value next to `Riak CS Key` in the Chef
+  provisioning output.
+* **Secret Key** - Replace with value next to `Riak CS Secret` in the Chef
+  provisioning output.
+* **Proxy Server**: `localhost`
+* **Proxy Port**: `8080`
 
 ``` bash
-$ vagrant ssh riak1
+$ s3cmd -c ~/.s3cfgfasttrack mb s3://test-bucket
 ```
 
 ## Vagrant boxes

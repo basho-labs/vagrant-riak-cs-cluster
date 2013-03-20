@@ -6,5 +6,5 @@ require "erlang_template_helper"
 name "stanchion"
 description "Role for the Stanchion node."
 run_list(
-  "recipe[riak_cs::stanchion]"
+  "recipe[riak-cs::stanchion]"
 )
