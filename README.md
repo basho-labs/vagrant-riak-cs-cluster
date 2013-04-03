@@ -18,7 +18,7 @@ compatibility issue.
 ### Clone repository
 
 ``` bash
-$ git clone https://github.com/hectcastro/vagrant-riak-cs-cluster.git
+$ git clone https://github.com/basho/vagrant-riak-cs-cluster.git
 $ cd vagrant-riak-cs-cluster
 ```
 
