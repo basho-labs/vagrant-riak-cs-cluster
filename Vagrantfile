@@ -29,6 +29,7 @@ Vagrant.configure("2") do |cluster|
 
       # Setup the network and additional file shares.
       if index == 1
+        config.vm.network :forwarded_port, guest: 8000, host: 8000
         config.vm.network :forwarded_port, guest: 8080, host: 8080
         config.vm.network :forwarded_port, guest: 8085, host: 8085
         config.vm.network :forwarded_port, guest: 8087, host: 8087
@@ -73,7 +74,10 @@ Vagrant.configure("2") do |cluster|
         chef.add_role "stanchion" if index == 1
         chef.add_role "riak_cs"
 
-        chef.add_recipe "riak-cs-create-admin-user" if !ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? && index == 1
+        if !ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? && index == 1
+          chef.add_recipe "riak-cs::control"
+          chef.add_recipe "riak-cs-create-admin-user"
+        end
 
         chef.json = {
           "authorization" => {
@@ -102,7 +106,13 @@ Vagrant.configure("2") do |cluster|
             "args" => {
               "+S" => 1,
               "-name" => "stanchion@33.33.33.#{last_octet}"
-            },
+            }
+          },
+          "riak_cs_control" => {
+            "args" => {
+              "+S" => 1,
+              "-name" => "riak-cs-control@33.33.33.#{last_octet}"
+            }
           }
         }
       end
