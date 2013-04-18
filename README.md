@@ -1,9 +1,10 @@
 # Vagrant Riak CS Cluster
 
-This is a Vagrant project powered by Chef to bring up a local Riak CS cluster.
-Each node can run either `Ubuntu 12.04` or `CentOS 6.3` 64-bit with `1536MB`
-of RAM by default. If you want to tune the OS or node/memory count, you'll
-have to edit the `Vagrantfile` directly.
+This is a Vagrant project powered by Chef to bring up a local [Riak
+CS](https://github.com/basho/riak_cs) cluster. Each node can run either `Ubuntu
+12.04` or `CentOS 6.3` 64-bit with `1536MB` of RAM by default. If you want to
+tune the OS or node/memory count, you'll have to edit the `Vagrantfile`
+directly.
 
 ## Configuration
 
@@ -11,7 +12,6 @@ have to edit the `Vagrantfile` directly.
 
 Download and install Vagrant via the
 [Vagrant installer](http://downloads.vagrantup.com/).
-
 
 ### Clone repository
 
@@ -44,6 +44,14 @@ There are 4 default settings you should change:
 ``` bash
 $ s3cmd -c ~/.s3cfgfasttrack mb s3://test-bucket
 ```
+
+## Riak CS Control
+
+[Riak CS Control](https://github.com/basho/riak_cs_control) is a standalone user
+management application for Riak CS. It provides a user interface for filtering,
+disabling, creating and managing users in a Riak CS Cluster.
+
+Navigate to `http://localhost:8000` in your web browser.
 
 ## Vagrant boxes
 
