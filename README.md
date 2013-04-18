@@ -10,10 +10,8 @@ have to edit the `Vagrantfile` directly.
 ### Install Vagrant
 
 Download and install Vagrant via the
-[Vagrant installer](http://downloads.vagrantup.com/tags/v1.0.7).
+[Vagrant installer](http://downloads.vagrantup.com/).
 
-**Note**: It is necessary, at present, to install Vagrant 1.0.7 due to a
-compatibility issue.
 
 ### Clone repository
 
