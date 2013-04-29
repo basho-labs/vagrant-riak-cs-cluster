@@ -3,13 +3,13 @@
 
 CENTOS = {
   sudo_group: "wheel",
-  box: "opscode-centos-6.3",
-  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.3_chef-11.2.0.box"
+  box: "opscode-centos-6.4",
+  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_chef-11.4.4.box"
 }
 UBUNTU = {
   sudo_group: "sudo",
   box: "opscode-ubuntu-12.04",
-  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.2.0.box"
+  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box"
 }
 
 NODES         = 1
