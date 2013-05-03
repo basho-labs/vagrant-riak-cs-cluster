@@ -91,6 +91,9 @@ Vagrant.configure("2") do |cluster|
               "-name" => "riak@33.33.33.#{last_octet}"
             }
           },
+          "riak_cs_create_admin_user" => {
+            "ssl" => true
+          },
           "riak_cs" => {
             "args" => {
               "+S" => 1,

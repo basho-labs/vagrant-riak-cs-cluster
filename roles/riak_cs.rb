@@ -6,5 +6,5 @@ require "erlang_template_helper"
 name "riak_cs"
 description "Role for Riak CS nodes."
 run_list(
-  "recipe[riak-cs]"
+  "recipe[riak-cs-ssl]"
 )
