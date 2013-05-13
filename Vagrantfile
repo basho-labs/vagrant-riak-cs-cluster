@@ -44,13 +44,14 @@ Vagrant.configure("2") do |cluster|
       config.vm.provision :shell, :inline => <<-SCRIPT.gsub(/^ {8}/, '')
         #!/bin/sh
         if [ -x /usr/bin/apt-get ]; then
-          sudo apt-get install -qq -y git
+          sudo apt-get update
+          sudo apt-get install -qq -y git libxslt-dev libxml2-dev
         else
           sudo yum install -q -y git
         fi
         if [ ! -x /opt/chef/embedded/bin/berks ]; then
           echo "Installing berkshelf"
-          sudo /opt/chef/embedded/bin/gem install berkshelf --no-ri --no-rdoc --quiet
+          sudo /opt/chef/embedded/bin/gem install berkshelf --no-ri --no-rdoc --quiet --version '= 1.4.3'
         fi
         echo "Berkshelf: Installing cookbooks"
         sudo /opt/chef/embedded/bin/berks install -b /vagrant/Berksfile -p /tmp/vagrant-chef-1/chef-solo-1/cookbooks
