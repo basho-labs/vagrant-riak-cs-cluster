@@ -44,9 +44,11 @@ Vagrant.configure("2") do |cluster|
       config.vm.provision :shell, :inline => <<-SCRIPT.gsub(/^ {8}/, '')
         #!/bin/sh
         if [ -x /usr/bin/apt-get ]; then
-          sudo apt-get install -qq -y git
+          sudo apt-get update
+          sudo apt-get install -qq -y git libxslt1-dev
         else
-          sudo yum install -q -y git
+          sudo yum update
+          sudo yum install -q -y git libxslt-devel
         fi
         if [ ! -x /opt/chef/embedded/bin/berks ]; then
           echo "Installing berkshelf"
