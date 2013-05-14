@@ -48,7 +48,7 @@ Vagrant.configure("2") do |cluster|
           sudo apt-get install -qq -y git libxslt1-dev
         else
           sudo yum update
-          sudo yum install -q -y git libxslt1-dev
+          sudo yum install -q -y git libxslt-devel
         fi
         if [ ! -x /opt/chef/embedded/bin/berks ]; then
           echo "Installing berkshelf"
