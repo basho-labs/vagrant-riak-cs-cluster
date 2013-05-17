@@ -10,6 +10,12 @@ run_list(
 )
 default_attributes(
   "riak" => {
+    "args" => {
+      "+zdbbl" => 96000,
+      "-env" => {
+        "ERL_MAX_PORTS" => 16384
+      }
+    },
     "config" => {
       "riak_core" => {
         "default_bucket_props" => [["allow_mult", true].to_erl_tuple]
