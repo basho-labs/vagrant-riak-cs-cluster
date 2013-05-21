@@ -33,7 +33,8 @@ Vagrant.configure("2") do |cluster|
         config.vm.network :forwarded_port, guest: 8080, host: 8080
         config.vm.network :forwarded_port, guest: 8085, host: 8085
         config.vm.network :forwarded_port, guest: 8087, host: 8087
-      end
+        config.vm.network :forwarded_port, guest: 8098, host: 8098
+       end
 
       config.vm.hostname = "riak#{index}"
       config.vm.network :private_network, ip: "#{BASE_IP}.#{last_octet}"
