@@ -33,12 +33,10 @@ Vagrant.configure("2") do |cluster|
 
       # Setup the network and additional file shares.
       if index == 1
-        config.vm.network :forwarded_port, guest: 8000, host: 8000
-        config.vm.network :forwarded_port, guest: 8080, host: 8080
-        config.vm.network :forwarded_port, guest: 8085, host: 8085
-        config.vm.network :forwarded_port, guest: 8087, host: 8087
-        config.vm.network :forwarded_port, guest: 8098, host: 8098
-       end
+        [ 8000, 8080, 8085, 8087, 8098 ].each do |port|
+          config.vm.network :forwarded_port, guest: port, host: port
+        end
+      end
 
       config.vm.hostname = "riak#{index}"
       config.vm.network :private_network, ip: "#{BASE_IP}.#{last_octet}"
