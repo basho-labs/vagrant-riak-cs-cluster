@@ -3,11 +3,11 @@
 
 CENTOS = {
   box: "opscode-centos-6.4",
-  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_chef-11.4.4.box"
+  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box"
 }
 UBUNTU = {
   box: "opscode-ubuntu-12.04",
-  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_chef-11.4.4.box"
+  url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box"
 }
 
 NODES         = 1
