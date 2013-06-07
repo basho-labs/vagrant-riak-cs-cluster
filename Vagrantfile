@@ -40,29 +40,9 @@ Vagrant.configure("2") do |cluster|
       config.vm.network :private_network, ip: "#{BASE_IP}.#{last_octet}"
       config.vm.synced_folder "lib/", "/tmp/vagrant-chef-1/lib"
 
-      # Hack for Berkshelf until the following bug is resolved:
-      # https://github.com/RiotGames/berkshelf-vagrant/issues/4
-      config.vm.provision :shell, :inline => <<-SCRIPT.gsub(/^ {8}/, '')
-        #!/bin/sh
-        if [ -x /usr/bin/apt-get ]; then
-          sudo apt-get update
-          sudo apt-get install -qq -y git libxslt-dev libxml2-dev
-        else
-          sudo yum install -q -y git libxslt-devel libxml2-devel
-        fi
-        if [ ! -x /opt/chef/embedded/bin/berks ]; then
-          echo "Installing berkshelf"
-          sudo /opt/chef/embedded/bin/gem install berkshelf --no-ri --no-rdoc --quiet --version '= 1.4.3'
-        fi
-        echo "Berkshelf: Installing cookbooks"
-        sudo /opt/chef/embedded/bin/berks install -b /vagrant/Berksfile -p /tmp/vagrant-chef-1/chef-solo-1/cookbooks
-        sudo mv /tmp/vagrant-chef-1/chef-solo-1/cookbooks/`ls -1 /tmp/vagrant-chef-1/chef-solo-1/cookbooks/`/* /tmp/vagrant-chef-1/chef-solo-1/cookbooks
-      SCRIPT
-
       # Provision using Chef.
       config.vm.provision :chef_solo do |chef|
         chef.roles_path = "roles"
-        chef.cookbooks_path = "cookbooks"
 
         if config.vm.box =~ /ubuntu/
           chef.add_recipe "apt"
