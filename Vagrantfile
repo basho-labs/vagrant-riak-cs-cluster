@@ -40,7 +40,6 @@ Vagrant.configure("2") do |cluster|
 
       config.vm.hostname = "riak#{index}"
       config.vm.network :private_network, ip: "#{BASE_IP}.#{last_octet}"
-      config.vm.synced_folder "lib/", "/tmp/vagrant-chef-1/lib"
 
       # Provision using Chef.
       config.vm.provision :chef_solo do |chef|

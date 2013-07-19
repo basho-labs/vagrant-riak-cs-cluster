@@ -68,13 +68,3 @@ please follow the links below:
 
 * [opscode-centos-6.4](https://github.com/opscode/bento/tree/master/definitions/centos-6.4)
 * [opscode-ubuntu-12.04](https://github.com/opscode/bento/tree/master/definitions/ubuntu-12.04)
-
-## Erlang template helper
-
-In order to set the appropriate Erlang data types for attributes, please use
-the following methods provided by `erlang_template_helper`:
-
-* `to_erl_string`
-* `to_erl_binary`
-* `to_erl_tuple`
-* `to_erl_list`
