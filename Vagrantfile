@@ -19,7 +19,9 @@ options = {
   :base_ip => "33.33.33",
   :ip_increment => 10,
   :cores => 1,
-  :memory => 1536
+  :memory => 1536,
+  :riak_listen_address => "10.0.2.15",
+  :riak_cs_listen_address => "10.0.2.15"
 }
 
 CONF_FILE = Pathname.new("vagrant-overrides.conf")
@@ -52,7 +54,6 @@ Vagrant.configure("2") do |cluster|
 
       config.vm.hostname = "riak#{index}"
       config.vm.network :private_network, ip: "#{options[:base_ip]}.#{last_octet}"
-      config.vm.synced_folder "lib/", "/tmp/vagrant-chef-1/lib"
 
       # Provision using Chef.
       config.vm.provision :chef_solo do |chef|
@@ -80,6 +81,15 @@ Vagrant.configure("2") do |cluster|
             "args" => {
               "+S" => 1,
               "-name" => "riak@#{options[:base_ip]}.#{last_octet}"
+            },
+            "config" => {
+              "riak_api" => {
+                "pb_ip" => "__string_#{options[:riak_listen_address]}"
+              },
+              "riak_core" => {
+                "http" =>
+                  { "__string_#{options[:riak_listen_address]}" => 8098 }
+              }
             }
           },
           "riak_cs" => {
@@ -89,7 +99,8 @@ Vagrant.configure("2") do |cluster|
             },
             "config" => {
               "riak_cs" => {
-                "anonymous_user_creation" => ((ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? || index != 1) ? false : true)
+                "anonymous_user_creation" => ((ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? || index != 1) ? false : true),
+                "cs_ip" => "__string_#{options[:riak_cs_listen_address]}"
               }
             }
           },
