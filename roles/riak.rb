@@ -1,8 +1,3 @@
-lib = File.join(Chef::Config.file_cache_path, "lib")
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
-require "erlang_template_helper"
-
 name "riak"
 description "Role for Riak Enterprise nodes."
 run_list(
@@ -18,7 +13,7 @@ default_attributes(
     },
     "config" => {
       "riak_core" => {
-        "default_bucket_props" => [["allow_mult", true].to_erl_tuple]
+        "default_bucket_props" => [["__tuple", "allow_mult", true]]
       },
       "riak_kv" => {
         "storage_backend" => "riak_cs_kv_multi_backend"

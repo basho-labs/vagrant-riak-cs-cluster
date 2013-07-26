@@ -40,7 +40,6 @@ Vagrant.configure("2") do |cluster|
 
       config.vm.hostname = "riak#{index}"
       config.vm.network :private_network, ip: "#{BASE_IP}.#{last_octet}"
-      config.vm.synced_folder "lib/", "/tmp/vagrant-chef-1/lib"
 
       # Provision using Chef.
       config.vm.provision :chef_solo do |chef|
@@ -54,9 +53,9 @@ Vagrant.configure("2") do |cluster|
         end
 
         chef.add_role "base"
+        chef.add_role "riak_cs"
         chef.add_role "riak"
         chef.add_role "stanchion" if index == 1
-        chef.add_role "riak_cs"
 
         if !ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? && index == 1
           chef.add_recipe "riak-cs::control"
@@ -95,6 +94,8 @@ Vagrant.configure("2") do |cluster|
           }
         }
       end
+
+      config.vm.provision :shell, :inline => "sudo service riak-cs start"
     end
   end
 end
