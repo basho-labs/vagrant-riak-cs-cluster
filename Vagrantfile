@@ -36,7 +36,7 @@ Vagrant.configure("2") do |cluster|
   # Utilize the Berkshelf plugin to resolve cookbook dependencies.
   cluster.berkshelf.enabled = true
 
-  (1..options[:nodes]).each do |index|
+  (1..options[:nodes].to_i).each do |index|
     last_octet = index * options[:ip_increment].to_i
 
     cluster.vm.define "riak#{index}".to_sym do |config|
