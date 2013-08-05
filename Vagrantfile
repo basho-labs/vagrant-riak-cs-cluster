@@ -1,8 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-require 'berkshelf/vagrant'
-
 CENTOS = {
   box: "opscode-centos-6.4",
   url: "https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box"
