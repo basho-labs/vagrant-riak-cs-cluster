@@ -9,3 +9,5 @@ Gemfile.lock
 *.un~
 /bin
 vagrant-overrides.conf
+*.deb
+*.pem
