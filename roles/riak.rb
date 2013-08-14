@@ -1,6 +1,7 @@
 name "riak"
 description "Role for Riak Enterprise nodes."
 run_list(
+  "recipe[riak-cs::package]",
   "recipe[riak]"
 )
 default_attributes(
