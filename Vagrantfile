@@ -65,8 +65,8 @@ Vagrant.configure("2") do |cluster|
         end
 
         chef.add_role "base"
-        chef.add_role "riak_cs"
         chef.add_role "riak"
+        chef.add_role "riak_cs"
         chef.add_role "stanchion" if index == 1
 
         if !ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? && index == 1
@@ -116,8 +116,6 @@ Vagrant.configure("2") do |cluster|
           }
         }
       end
-
-      config.vm.provision :shell, :inline => "sudo service riak-cs start"
     end
   end
 end

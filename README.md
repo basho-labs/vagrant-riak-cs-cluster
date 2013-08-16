@@ -27,20 +27,6 @@ $ git clone https://github.com/basho/vagrant-riak-cs-cluster.git
 $ cd vagrant-riak-cs-cluster
 ```
 
-### Customize the cluster
-
-By default, the cluster will be built using the following options:
-
-  * nodes: 1
-  * base_ip: 33.33.33
-  * ip_increment: 10
-  * cores: 1
-  * memory: 1536 (bytes)
-  * riak_listen_address: 10.0.2.15
-  * riak_cs_listen_address: 10.0.2.15
-
-These defaults can be overridden by creating a `vagrant-overrides.conf` file in the same directory as the Vagrantfile in the form of `key=value` (e.g. cores=2).
-
 ### Launch cluster
 
 ``` bash
@@ -65,6 +51,23 @@ There are 4 default settings you should change:
 ``` bash
 $ s3cmd -c ~/.s3cfgfasttrack mb s3://test-bucket
 ```
+
+### Customize cluster
+
+By default, the cluster will be built using the following options:
+
+```
+nodes=1
+base_ip=33.33.33
+ip_increment=10
+cores=1
+memory=1536
+riak_listen_address=10.0.2.15
+riak_cs_listen_address=10.0.2.15
+```
+
+These defaults can be overridden by creating a `vagrant-overrides.conf` file
+in the same directory as the Vagrantfile in the form of `key=value`.
 
 ## Riak CS Control
 
