@@ -18,8 +18,12 @@ options = {
   :ip_increment => 10,
   :cores => 1,
   :memory => 1536,
-  :riak_listen_address => "10.0.2.15",
-  :riak_cs_listen_address => "10.0.2.15"
+  :riak_listen_address => "127.0.0.1",
+  :stanchion_listen_address => "0.0.0.0",
+  :riak_cs_root_host => "s3.amazonaws.com",
+  :riak_cs_listen_address => "0.0.0.0",
+  :riak_cs_rewrite_module => "riak_cs_s3_rewrite",
+  :riak_cs_auth_module => "riak_cs_s3_auth"
 }
 
 CONF_FILE = Pathname.new("vagrant-overrides.conf")
@@ -71,7 +75,11 @@ Vagrant.configure("2") do |cluster|
 
         if !ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? && index == 1
           chef.add_recipe "riak-cs::control"
-          chef.add_recipe "riak-cs-create-admin-user"
+
+          if options[:riak_cs_rewrite_module] == "riak_cs_s3_rewrite" &&
+            options[:riak_cs_auth_module] == "riak_cs_s3_auth"
+            chef.add_recipe "riak-cs-create-admin-user"
+          end
         end
 
         chef.json = {
@@ -82,7 +90,8 @@ Vagrant.configure("2") do |cluster|
             },
             "config" => {
               "riak_api" => {
-                "pb_ip" => "__string_#{options[:riak_listen_address]}"
+                "pb" =>
+                  { "__string_#{options[:riak_listen_address]}" => 8087 }
               },
               "riak_core" => {
                 "http" =>
@@ -97,8 +106,13 @@ Vagrant.configure("2") do |cluster|
             },
             "config" => {
               "riak_cs" => {
+                "riak_ip" => "__string_#{options[:riak_listen_address]}",
+                "stanchion_ip" => "__string_#{options[:stanchion_listen_address]}",
                 "anonymous_user_creation" => ((ENV["RIAK_CS_CREATE_ADMIN_USER"].nil? || index != 1) ? false : true),
-                "cs_ip" => "__string_#{options[:riak_cs_listen_address]}"
+                "cs_root_host" => "__string_#{options[:riak_cs_root_host]}",
+                "cs_ip" => "__string_#{options[:riak_cs_listen_address]}",
+                "rewrite_module" => options[:riak_cs_rewrite_module],
+                "auth_module" => options[:riak_cs_auth_module]
               }
             }
           },
@@ -106,6 +120,12 @@ Vagrant.configure("2") do |cluster|
             "args" => {
               "+S" => 1,
               "-name" => "stanchion@#{options[:base_ip]}.#{last_octet}"
+            },
+            "config" => {
+              "stanchion" => {
+                "riak_ip" => "__string_#{options[:riak_listen_address]}",
+                "stanchion_ip" => "__string_#{options[:stanchion_listen_address]}"
+              }
             }
           },
           "riak_cs_control" => {
@@ -115,6 +135,15 @@ Vagrant.configure("2") do |cluster|
             }
           }
         }
+      end
+
+      if options[:riak_cs_rewrite_module] == "riak_cs_oos_rewrite" &&
+        options[:riak_cs_auth_module] == "riak_cs_keystone_auth"
+        if OS == UBUNTU
+          config.vm.provision "shell", path: "bin/setup-keystone-ubuntu.sh"
+        elsif OS == CENTOS
+          config.vm.provision "shell", path: "bin/setup-keystone-centos.sh"
+        end
       end
     end
   end

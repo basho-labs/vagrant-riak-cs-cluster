@@ -7,7 +7,6 @@ Gemfile.lock
 \#*#
 .*.sw[a-z]
 *.un~
-/bin
 vagrant-overrides.conf
 *.deb
 *.pem

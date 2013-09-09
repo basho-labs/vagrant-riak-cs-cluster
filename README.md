@@ -62,12 +62,32 @@ base_ip=33.33.33
 ip_increment=10
 cores=1
 memory=1536
-riak_listen_address=10.0.2.15
-riak_cs_listen_address=10.0.2.15
+riak_listen_address=127.0.0.1
+stanchion_listen_address=0.0.0.0
+riak_cs_root_host=s3.amazonaws.com
+riak_cs_listen_address=0.0.0.0
+riak_cs_rewrite_module=riak_cs_s3_rewrite
+riak_cs_auth_module=>riak_cs_s3_auth
 ```
 
 These defaults can be overridden by creating a `vagrant-overrides.conf` file
 in the same directory as the Vagrantfile in the form of `key=value`.
+
+## OpenStack Swift
+
+Riak CS 1.4.0 added preliminary support for the Swift API and Keystone
+authentication. By default, Riak CS comes with the S3 API and authenication
+module enabled. In order to enable the Swift API and Keystone authenication,
+add the following entries to your `vagrant-overrides.conf`:
+
+```
+riak_cs_root_host=localhost
+riak_cs_auth_module=riak_cs_keystone_auth
+riak_cs_rewrite_module=riak_cs_oos_rewrite
+riak_listen_address=127.0.0.1
+riak_cs_listen_address=127.0.0.1
+stanchion_listen_address=127.0.0.1
+```
 
 ## Riak CS Control
 
