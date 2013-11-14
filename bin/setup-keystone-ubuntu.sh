@@ -49,6 +49,8 @@ ROLE_ID=$(keystone role-create --name swiftoperator | grep "id" | awk -F'|' '{gs
 keystone user-role-add --user-id $USER_ID --role-id $ROLE_ID --tenant-id $TENANT_ID
 keystone ec2-credentials-create --user_id $USER_ID --tenant_id $TENANT_ID
 
-echo "Token & Public URL:\n\n"
+curl -s -d '{"auth": {"tenantName": "test", "passwordCredentials": {"username": "test", "password": "test"}}}' \
+  -H 'Content-type: application/json' http://localhost:5000/v2.0/tokens |
+  /usr/local/bin/jq '.access.token.id, .access.serviceCatalog[0].endpoints[0].publicURL'
 
 curl -s -d '{"auth": {"tenantName": "test", "passwordCredentials": {"username": "test", "password": "test"}}}' -H 'Content-type: application/json' http://localhost:5000/v2.0/tokens | /usr/local/bin/jq '.access.token.id, .access.serviceCatalog[0].endpoints[0].publicURL'
