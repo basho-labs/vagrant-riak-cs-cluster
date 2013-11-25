@@ -18,6 +18,7 @@ Download and install Vagrant via the
 ``` bash
 $ vagrant plugin install vagrant-berkshelf
 $ vagrant plugin install vagrant-omnibus
+$ vagrant plugin install vagrant-cachier (Use RIAK_CS_USE_CACHE to enable)
 ```
 
 ### Clone repository
@@ -30,7 +31,7 @@ $ cd vagrant-riak-cs-cluster
 ### Launch cluster
 
 ``` bash
-$ RIAK_CS_CREATE_ADMIN_USER=1 vagrant up
+$ RIAK_CS_USE_CACHE=1 RIAK_CS_CREATE_ADMIN_USER=1 vagrant up
 ```
 
 ### Test cluster
