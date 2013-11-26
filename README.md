@@ -18,6 +18,7 @@ Download and install Vagrant via the
 ``` bash
 $ vagrant plugin install vagrant-berkshelf
 $ vagrant plugin install vagrant-omnibus
+$ vagrant plugin install vagrant-cachier (Use RIAK_CS_USE_CACHE to enable)
 ```
 
 ### Clone repository
@@ -30,7 +31,7 @@ $ cd vagrant-riak-cs-cluster
 ### Launch cluster
 
 ``` bash
-$ RIAK_CS_CREATE_ADMIN_USER=1 vagrant up
+$ RIAK_CS_USE_CACHE=1 RIAK_CS_CREATE_ADMIN_USER=1 vagrant up
 ```
 
 ### Test cluster
@@ -62,8 +63,12 @@ base_ip=33.33.33
 ip_increment=10
 cores=1
 memory=1536
-riak_listen_address=10.0.2.15
-riak_cs_listen_address=10.0.2.15
+riak_listen_address=127.0.0.1
+stanchion_listen_address=33.33.33.10
+riak_cs_root_host=s3.amazonaws.com
+riak_cs_listen_address=0.0.0.0
+riak_cs_rewrite_module=riak_cs_s3_rewrite
+riak_cs_auth_module=>riak_cs_s3_auth
 ```
 
 These defaults can be overridden by creating a `vagrant-overrides.conf` file

@@ -13,6 +13,9 @@ default_attributes(
       }
     },
     "config" => {
+      "riak_api" => {
+        "pb_backlog" => 128
+      },
       "riak_core" => {
         "default_bucket_props" => [["__tuple", "allow_mult", true]]
       },
