@@ -34,6 +34,14 @@ $ cd vagrant-riak-cs-cluster
 $ RIAK_CS_USE_CACHE=1 RIAK_CS_CREATE_ADMIN_USER=1 vagrant up
 ```
 
+### Environmental variables
+
+- `RIAK_CS_CREATE_ADMIN_USER` – A flag signaling whether you want an
+  administrative user for Riak CS to be created for you (default: `false`)
+- `RIAK_CS_USE_CACHE` – Whether you want to allow Vagrant to use the
+  [vagrant-cachier](https://github.com/fgrehm/vagrant-cachier) plugin or not
+  (default: `false`)
+
 ### Test cluster
 
 ``` bash
