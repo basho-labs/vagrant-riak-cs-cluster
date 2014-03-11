@@ -36,7 +36,8 @@ Vagrant.configure("2") do |cluster|
   cluster.omnibus.chef_version = :latest
 
   # Utilize the Cachier plugin to cache downloaded packages.
-  unless ENV["RIAK_CS_USE_CACHE"].nil?
+  if Vagrant.has_plugin?("vagrant-cachier") && !ENV["RIAK_CS_USE_CACHE"].nil?
+    cluster.cache.scope = :box
     cluster.cache.auto_detect = true
   end
 
