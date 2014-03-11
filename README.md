@@ -1,10 +1,8 @@
 # Vagrant Riak CS Cluster
 
 This is a Vagrant project powered by Chef to bring up a local [Riak
-CS](https://github.com/basho/riak_cs) cluster. Each node can run either `Ubuntu
-12.04` or `CentOS 6.4` 64-bit with `1536MB` of RAM by default. If you want to
-tune the OS or node/memory count, you'll have to edit the `Vagrantfile`
-directly.
+CS](https://github.com/basho/riak_cs) cluster. Each node can run either
+`Ubuntu 12.04` or `CentOS 6.5` 64-bit with `1024MB` of RAM by default.
 
 ## Configuration
 
@@ -70,7 +68,7 @@ nodes=1
 base_ip=33.33.33
 ip_increment=10
 cores=1
-memory=1536
+memory=1024
 riak_listen_address=127.0.0.1
 stanchion_listen_address=33.33.33.10
 riak_cs_root_host=s3.amazonaws.com
