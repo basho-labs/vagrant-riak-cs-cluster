@@ -91,9 +91,9 @@ Navigate to `http://localhost:8000` in your web browser.
 ## Vagrant boxes
 
 The Vagrant boxes used in this project were created by
-[Veewee](https://github.com/jedi4ever/veewee/). To view the Veewee definitions,
-please follow the links below:
+[Packer](http://www.packer.io/). To view the Packer templates, please follow
+the links below:
 
-* [opscode-centos-6.4](https://github.com/opscode/bento/tree/master/definitions/centos-6.4)
-* [opscode-ubuntu-12.04](https://github.com/opscode/bento/tree/master/definitions/ubuntu-12.04)
+* [opscode-centos-6.5](https://github.com/opscode/bento/blob/master/packer/centos-6.5-x86_64.json)
+* [opscode-ubuntu-12.04](https://github.com/opscode/bento/blob/master/packer/ubuntu-12.04-amd64.json)
 
