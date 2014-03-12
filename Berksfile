@@ -4,6 +4,8 @@ cookbook "ntp"
 cookbook "nmap"
 cookbook "htop"
 cookbook "openssh"
+cookbook "serf"
+cookbook "sudo"
 
 cookbook "riak", github: "basho/riak-chef-cookbook", ref: "2.4.7"
 cookbook "riak-cs", github: "basho/riak-cs-chef-cookbook", tag: "2.2.6"

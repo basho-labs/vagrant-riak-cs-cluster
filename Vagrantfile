@@ -84,7 +84,7 @@ Vagrant.configure("2") do |cluster|
           chef.add_recipe "riak-cs-create-admin-user"
         end
 
-        chef.json = {
+        attrs = {
           "riak" => {
             "args" => {
               "+S" => 1,
@@ -137,6 +137,35 @@ Vagrant.configure("2") do |cluster|
             }
           }
         }
+
+        if index == 1
+          attrs.merge!({
+            "serf" => {
+              "agent" => {
+                "node_name" => "riak#{index}",
+                "bind" => "#{options[:base_ip]}.#{last_octet}"
+              },
+              "event_handlers" => [
+                { "url" => "https://gist.githubusercontent.com/hectcastro/a6ff5169c256f528f832/raw/f1de90e22504408e6b44509ac3a57b9b2f15570d/serf-seed-member-join.sh" }
+              ]
+            }
+          })
+        else
+          attrs.merge!({
+            "serf" => {
+              "agent" => {
+                "node_name" => "riak#{index}",
+                "bind" => "#{options[:base_ip]}.#{last_octet}",
+                "start_join" => [ "#{options[:base_ip]}.10" ],
+              },
+              "event_handlers" => [
+                { "url" => "https://gist.githubusercontent.com/hectcastro/a6ff5169c256f528f832/raw/a3139fc6a6d7e5bc3bf1f78a9c83267d39fed680/serf-peer-member-join.sh" }
+              ]
+            }
+          })
+        end
+
+        chef.json = attrs
       end
     end
   end
