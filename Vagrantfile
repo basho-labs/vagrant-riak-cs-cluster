@@ -71,7 +71,7 @@ Vagrant.configure("2") do |cluster|
           chef.add_recipe "apt"
         else
           chef.add_recipe "yum"
-          chef.add_recipe "yum::epel"
+          chef.add_recipe "yum-epel"
         end
 
         chef.add_role "base"
