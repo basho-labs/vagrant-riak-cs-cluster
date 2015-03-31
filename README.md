@@ -4,6 +4,14 @@ This is a Vagrant project powered by Chef to bring up a local [Riak
 CS](https://github.com/basho/riak_cs) cluster. Each node can run either
 `Ubuntu 12.04` or `CentOS 6.5` 64-bit with `1024MB` of RAM by default.
 
+## Description 
+
+This repository is **community supported**. We both appreciate and need your
+contribution to keep it stable. For more on how to contribute,
+[take a look at the contribution process](#contribution).
+
+Thank you for being part of the community! We love you for it.
+
 ## Configuration
 
 ### Install Vagrant
@@ -100,3 +108,21 @@ the links below:
 
 * [opscode-centos-6.5](https://github.com/opscode/bento/blob/master/packer/centos-6.5-x86_64.json)
 * [opscode-ubuntu-12.04](https://github.com/opscode/bento/blob/master/packer/ubuntu-12.04-amd64.json)
+
+## Contribution
+
+Basho Labs repos survive because of community contribution. Here’s how to get started.
+
+* Fork the appropriate sub-projects that are affected by your change
+* Create a topic branch for your change and checkout that branch
+     `git checkout -b some-topic-branch`
+* Make your changes and run the test suite if one is provided (see below)
+* Commit your changes and push them to your fork
+* Open a pull request with a descriptive title
+* Maintainers will review your pull request, suggest changes, and merge it when it’s ready and/or offer feedback
+* To report a bug or issue, please open a new issue against this repository
+
+You can [read the full guidelines for bug reporting and code contributions](http://docs.basho.com/riak/latest/community/bugs/) on the Riak Docs. And **thank you!** Your contribution is incredible important to us.
+
+### Maintainers
+* This repo needs one! Open an issue if you'd like to become one
