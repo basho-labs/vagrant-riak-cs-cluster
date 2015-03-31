@@ -55,6 +55,10 @@ There are 4 default settings you should change:
 * **Proxy Server**: `localhost`
 * **Proxy Port**: `8080`
 
+In addition, change `signature_v2 = False` to `signature_v2 = True`; `s3cmd`
+uses AWS v4 authentication, whereas Riak CS does not support this yet.  See also
+[issue 897](https://github.com/basho/riak_cs/issues/897).
+
 ``` bash
 $ s3cmd -c ~/.s3cfgfasttrack mb s3://test-bucket
 ```
@@ -96,4 +100,3 @@ the links below:
 
 * [opscode-centos-6.5](https://github.com/opscode/bento/blob/master/packer/centos-6.5-x86_64.json)
 * [opscode-ubuntu-12.04](https://github.com/opscode/bento/blob/master/packer/ubuntu-12.04-amd64.json)
-
