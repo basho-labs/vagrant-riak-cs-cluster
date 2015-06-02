@@ -30,7 +30,7 @@ $ vagrant plugin install vagrant-cachier (Use RIAK_CS_USE_CACHE to enable)
 ### Clone repository
 
 ``` bash
-$ git clone https://github.com/basho/vagrant-riak-cs-cluster.git
+$ git clone https://github.com/basho-labs/vagrant-riak-cs-cluster.git
 $ cd vagrant-riak-cs-cluster
 ```
 
