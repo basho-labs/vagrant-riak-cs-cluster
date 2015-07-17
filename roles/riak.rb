@@ -6,7 +6,6 @@ run_list(
 )
 default_attributes(
   "riak" => {
-    "cs_version" => "1.4.5",
     "args" => {
       "+zdbbl" => 96000,
       "-env" => {
