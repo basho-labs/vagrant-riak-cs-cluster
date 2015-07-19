@@ -33,7 +33,7 @@ override_options.each { |key, value| options[key.to_sym] = value unless key.star
 
 Vagrant.configure("2") do |cluster|
   # Ensure latest version of Chef is installed.
-  cluster.omnibus.chef_version = :latest
+  cluster.omnibus.chef_version = "11.18.6"
 
   # Utilize the Cachier plugin to cache downloaded packages.
   if Vagrant.has_plugin?("vagrant-cachier") && !ENV["RIAK_CS_USE_CACHE"].nil?
